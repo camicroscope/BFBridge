@@ -3,7 +3,7 @@ from pathlib import Path
 import sys
 import os
 
-if __name__ == "__main__":
+def compile_bfbridge():
     # API mode out-of-line
     # https://cffi.readthedocs.io/en/latest/overview.html#purely-for-performance-api-level-out-of-line
     ffibuilder = FFI()
@@ -74,3 +74,6 @@ if __name__ == "__main__":
     ffibuilder.set_source("_bfbridge", bfbridge_source, extra_link_args=extra_link_args, include_dirs=java_include, libraries=["jvm"])
 
     ffibuilder.compile(verbose=True)
+
+if __name__ == "__main__":
+    compile_bfbridge()
