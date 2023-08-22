@@ -748,4 +748,28 @@ public class BFBridge {
             return -1;
         }
     }
+
+    private static String getStackTrace(Throwable t) {
+        StringWriter sw = new StringWriter();
+        t.printStackTrace(new PrintWriter(sw));
+        return t.toString() + "\n" + sw.toString();
+    }
+
+    private void close() {
+        try {
+            reader.close();
+        } catch (Exception e) {
+
+        }
+    }
+
+    private void saveError(String s) {
+        byte[] errorBytes = s.getBytes(charset);
+        int bytes_len = errorBytes.length;
+        // -1 to account for the null byte for security
+        bytes_len = Math.min(bytes_len, Math.max(communicationBuffer.capacity() - 1, 0));
+        // Trim error message
+        communicationBuffer.rewind().put(errorBytes, 0, bytes_len);
+        lastErrorBytes = bytes_len;
+    }
 }
