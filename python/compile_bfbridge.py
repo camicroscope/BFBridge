@@ -13,8 +13,7 @@ def compile_bfbridge():
         bfbridge_header = Path('bfbridge_basiclib.h').read_text()
         bfbridge_cffi_prefix = Path('bfbridge_cffi_prefix.h').read_text()
     except:
-        print("bfbridge_basiclib.c and/or bfbridge_basiclib.h and/or bfbridge_cffi_prefix.h could not be found")
-        sys.exit(1)
+        raise RuntimeError("bfbridge_basiclib.c and/or bfbridge_basiclib.h and/or bfbridge_cffi_prefix.h could not be found")
 
     header_begin = "CFFI HEADER BEGIN"
     header_end = "CFFI HEADER END"
@@ -23,8 +22,7 @@ def compile_bfbridge():
         header_begin_index = bfbridge_header.index(header_begin)
         header_end_index = bfbridge_header.index(header_end)
     except:
-        print("bfbridge_basiclib.h CFFI markers could not be found")
-        sys.exit(1)
+        raise RuntimeError("bfbridge_basiclib.h CFFI markers could not be found")
 
     # Fix header_begin_index: beginning from the middle of a "//"
     # comment produces an invalid header.
@@ -46,8 +44,7 @@ def compile_bfbridge():
     ffibuilder.cdef(bfbridge_header)
 
     if "JAVA_HOME" not in os.environ:
-        print("Please set JAVA_HOME to a JDK")
-        sys.exit(1)
+        raise RuntimeError("Please set JAVA_HOME environment variable to a JDK Home directory")
 
     java_home = os.path.join(os.environ['JAVA_HOME'])
     java_include = os.path.join(java_home, "include")
