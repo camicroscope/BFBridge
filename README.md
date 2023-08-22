@@ -1,4 +1,4 @@
-# BFBridge
+# BFBridge
 
 BioFormats wrapper in C using Java JNI, plus a Python wrapper using CFFI.
 
@@ -43,7 +43,7 @@ bfbridge_free_vm(&vm);
 
 You may also define `BFBRIDGE_INLINE` from including the header to make it a header-only library for performance.
 
-## Python
+## Python
 
 ```py
 vm = BFBridgeVM()
@@ -64,7 +64,7 @@ instance.open("/path/to/file.svs")
 
 For example, if bfbridge_make_thread fails, calling bfbridge_make_instance, bfbridge_free_instance, bfbridge_free_thread will not cause any segmentation fault. This is important because it means that the C++ or Python destructor won't fail if it tries to free any structures that haven't been allocated yet. This means that the library make functions, on failure, set a failure marker so that free functions won't cause nullpointer dereference. However the user of the library must ensure allocation and deallocation of the types.
 
-## Limitations
+## Limitations
 
 - Python code does not work well with, for example, matplotlib. This could be due to TCL. This can be overcome by making all BioFormats calls from a separate thread.
 
