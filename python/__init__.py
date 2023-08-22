@@ -2,8 +2,29 @@ import os
 import threading
 from . import gtm, make_pil_image
 
-# This will fail if compile_bfbridge.py was not run, with the same Python version
-from ._bfbridge import ffi, lib
+try:
+    # This will fail if compile_bfbridge.py was not run. Needs to compile with the same Python version
+    from ._bfbridge import ffi, lib
+except ImportError as e:
+    print("Error: BFBridge (BioFormats wrapper) import failed:")
+    print(str(e))
+    print("Trying to compile.")
+    from . import compile_bfbridge
+    try:
+        compile_bfbridge.compile_bfbridge()
+    except BaseException as e2:
+        print("BFBridge could not be compiled. Cannot proceed. Error:")
+        print(str(e2))
+        raise e
+    print("BFBridge compilation seems to be successful. Retrying import.")
+    try:
+        from ._bfbridge import ffi, lib
+    except BaseException as e2:
+        print("Importing after BFBridge compilation failed. Cannot proceed")
+        print(str(e2))
+        raise e
+    print("BFBridge loaded successfully after recompilation.")
+
 
 # Can be created only once during a Python process lifetime.
 # Once it's destroyed it cannot be recreated in the same process
