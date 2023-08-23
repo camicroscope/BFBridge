@@ -7,10 +7,11 @@ def compile_bfbridge():
     # API mode out-of-line
     # https://cffi.readthedocs.io/en/latest/overview.html#purely-for-performance-api-level-out-of-line
     ffibuilder = FFI()
+    c_dir = os.path.join('..', 'c', '')
 
     try:
-        bfbridge_source = Path('bfbridge_basiclib.c').read_text()
-        bfbridge_header = Path('bfbridge_basiclib.h').read_text()
+        bfbridge_source = Path(c_dir + 'bfbridge_basiclib.c').read_text()
+        bfbridge_header = Path(c_dir + 'bfbridge_basiclib.h').read_text()
         bfbridge_cffi_prefix = Path('bfbridge_cffi_prefix.h').read_text()
     except:
         raise RuntimeError("bfbridge_basiclib.c and/or bfbridge_basiclib.h and/or bfbridge_cffi_prefix.h could not be found")
@@ -68,7 +69,7 @@ def compile_bfbridge():
         extra_link_args.append("-ljvm")
         extra_link_args.append("-L" + java_link)
 
-    ffibuilder.set_source("_bfbridge", bfbridge_source, extra_link_args=extra_link_args, include_dirs=java_include, libraries=["jvm"])
+    ffibuilder.set_source("_bfbridge", bfbridge_source, extra_link_args=extra_link_args, include_dirs=java_include + [c_dir], libraries=["jvm"])
 
     ffibuilder.compile(verbose=True)
 
