@@ -413,7 +413,7 @@ void bfbridge_free_thread(bfbridge_thread_t *dest)
     // Ease of freeing
     if (dest->env && dest->vm->jvm)
     {
-        int code = BFENVAV(dest->vm->jvm, DetachCurrentThread);
+        /*int code =*/BFENVAV(dest->vm->jvm, DetachCurrentThread);
         // printf("DetachCurrentThread: return code should be zero %d\n\n", code);
         dest->env = NULL;
     }
