@@ -15,7 +15,6 @@ class BFBridgeVM:
         cpdir_arg = ffi.new("char[]", cpdir.encode())
 
         cachedir = os.environ.get("BFBRIDGE_CACHEDIR")
-        print("cachedir received: " + cachedir)
         cachedir_arg = ffi.NULL
         if cachedir is not None and cachedir != "":
             cachedir_arg = ffi.new("char[]", cachedir.encode())
