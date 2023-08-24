@@ -8,6 +8,7 @@ def compile_bfbridge():
     # https://cffi.readthedocs.io/en/latest/overview.html#purely-for-performance-api-level-out-of-line
     ffibuilder = FFI()
     c_dir = os.path.join('..', 'c', '')
+    print("compile_bfbridge: starting in working directory " + os.getcwd())
 
     try:
         bfbridge_cffi_prefix = Path('bfbridge_cffi_prefix.h').read_text()
