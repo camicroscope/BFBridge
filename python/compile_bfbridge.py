@@ -10,11 +10,11 @@ def compile_bfbridge():
 
     # get this directory
     try:
-        cwd = __file__
+        cwd = Path(__file__).parent
     except:
         print("compile_bfbridge cannot detect current directory. continuing with '.'")
         # this is equivalent to os.getcwd()
-        cwd = '.'
+        cwd = Path('.')
 
     # add '/' to cwd if it doesn't exist
     cwd = os.path.join(cwd, '')
