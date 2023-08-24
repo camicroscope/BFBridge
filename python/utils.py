@@ -9,6 +9,7 @@ def IMPORT_BFBRIDGE():
         # This will fail if compile_bfbridge.py was not run. Needs to compile with the same Python version.
         # Or if os.getcwd does not contain the shared object
         from ._bfbridge import ffi, lib
+        return ffi, lib
     except ImportError as e:
         print("Error: BFBridge (BioFormats wrapper) import failed:")
         print(str(e))
