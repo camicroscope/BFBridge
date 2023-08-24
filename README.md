@@ -46,9 +46,11 @@ You may also define `BFBRIDGE_INLINE` from including the header to make it a hea
 ## Python
 
 ```py
-vm = BFBridgeVM()
-thread = BFBridgeThread(vm)
-instance = BFBridgeInstance(thread)
+import BFBridge.python as bfbridge
+
+vm = bfbridge.BFBridgeVM()
+thread = bfbridge.BFBridgeThread(vm)
+instance = bfbridge.BFBridgeInstance(thread)
 
 # if you would like to keep the Java thread alive as long as the Python thread is alive:
 import threading
