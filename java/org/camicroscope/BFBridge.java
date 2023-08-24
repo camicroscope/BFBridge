@@ -105,7 +105,7 @@ public class BFBridge {
     static {
         String cachepath = System.getProperty("BFBridge.cachedir");
         if (cachepath == null) {
-            cachepath = System.getEnv("BFBRIDGE_CACHEDIR");
+            cachepath = System.getenv("BFBRIDGE_CACHEDIR");
         }
         System.out.println("Trying BFBridge cache directory: " + cachepath);
 
