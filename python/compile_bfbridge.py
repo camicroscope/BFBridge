@@ -7,9 +7,19 @@ def compile_bfbridge():
     # API mode out-of-line
     # https://cffi.readthedocs.io/en/latest/overview.html#purely-for-performance-api-level-out-of-line
     ffibuilder = FFI()
-    
-    cwd = os.getcwd()
-    # c_dir: "../c/"
+
+    # get this directory
+    try:
+        cwd = __file__
+    except:
+        print("compile_bfbridge cannot detect current directory. continuing with '.'")
+        # this is equivalent to os.getcwd()
+        cwd = '.'
+
+    # add '/' to cwd if it doesn't exist
+    cwd = os.path.join(cwd, '')
+
+    # c_dir: '../c/'
     c_dir = os.path.join(Path(cwd).parent, 'c', '')
     print("compile_bfbridge: starting in working directory " + cwd)
 
