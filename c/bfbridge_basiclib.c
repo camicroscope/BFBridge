@@ -170,7 +170,10 @@ bfbridge_error_t *bfbridge_make_vm(bfbridge_vm_t *dest,
     // char optimize2[] = "-XX:+UseLargePages"; Not compatible with our linux distro
     options[0].optionString = path_arg->str;
     options[1].optionString = optimize1;
+    // Note: please make sure to update the array size above and nOptions below
+    // to uncomment these
     // options[2].optionString = "-verbose:jni";
+    // options[3].optionString = "-Xcheck:jni";
     JavaVMInitArgs vm_args;
     vm_args.version = JNI_VERSION_20;
     vm_args.nOptions = 2;
