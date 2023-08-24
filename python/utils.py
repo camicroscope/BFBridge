@@ -1,6 +1,7 @@
 from PIL import Image
 import numpy as np
 import os
+from pathlib import Path
 
 def IMPORT_BFBRIDGE():
     global ffi
@@ -38,6 +39,13 @@ def IMPORT_BFBRIDGE():
         print("BFBridge compilation seems to be successful. Retrying import.")
 
         try:
+            # todo deleteme
+            print("Trying to import. Working directory: " + os.getcwd())
+            print(os.listdir(Path(__file__).parent))
+            print(os.listdir(os.getcwd()))
+
+
+
             from ._bfbridge import ffi, lib
             if previous_cwd:
                 os.chdir(previous_cwd)
