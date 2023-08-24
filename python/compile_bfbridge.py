@@ -24,7 +24,7 @@ def compile_bfbridge():
     print("compile_bfbridge: starting in working directory " + cwd)
 
     try:
-        bfbridge_cffi_prefix = Path('bfbridge_cffi_prefix.h').read_text()
+        bfbridge_cffi_prefix = Path(cwd + 'bfbridge_cffi_prefix.h').read_text()
         bfbridge_source = Path(c_dir + 'bfbridge_basiclib.c').read_text()
         bfbridge_header = Path(c_dir + 'bfbridge_basiclib.h').read_text()
     except BaseException as e:
