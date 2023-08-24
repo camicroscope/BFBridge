@@ -3,10 +3,8 @@ import numpy as np
 import os
 from pathlib import Path
 
+# returns ffi, lib
 def IMPORT_BFBRIDGE():
-    global ffi
-    global lib
-
     try:
         # This will fail if compile_bfbridge.py was not run. Needs to compile with the same Python version.
         # Or if os.getcwd does not contain the shared object
@@ -22,7 +20,7 @@ def IMPORT_BFBRIDGE():
             from ._bfbridge import ffi, lib
             print("Successful")
             os.chdir(previous_cwd)
-            return
+            return ffi, lib
         except ImportError:
             previous_cwd = None
         except:
@@ -39,13 +37,6 @@ def IMPORT_BFBRIDGE():
         print("BFBridge compilation seems to be successful. Retrying import.")
 
         try:
-            # todo deleteme
-            print("Trying to import. Working directory: " + os.getcwd())
-            print(os.listdir(Path(__file__).parent))
-            print(os.listdir(os.getcwd()))
-
-
-
             from ._bfbridge import ffi, lib
             if previous_cwd:
                 os.chdir(previous_cwd)
@@ -56,6 +47,7 @@ def IMPORT_BFBRIDGE():
                 os.chdir(previous_cwd)
             raise e
         print("BFBridge loaded successfully after recompilation.")
+        return ffi, lib
 
 # channels = 3 or 4 supported currently
 # interleaved: Boolean

@@ -1,7 +1,7 @@
 import os
 import threading
 from . import gtm, utils
-utils.IMPORT_BFBRIDGE()
+ffi, lib = utils.IMPORT_BFBRIDGE()
 
 
 # Can be created only once during a Python process lifetime.
