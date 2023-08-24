@@ -7,8 +7,11 @@ def compile_bfbridge():
     # API mode out-of-line
     # https://cffi.readthedocs.io/en/latest/overview.html#purely-for-performance-api-level-out-of-line
     ffibuilder = FFI()
-    c_dir = os.path.join('..', 'c', '')
-    print("compile_bfbridge: starting in working directory " + os.getcwd())
+    
+    cwd = os.getcwd()
+    # c_dir: "../c/"
+    c_dir = os.path.join(Path(cwd).parent, 'c', '')
+    print("compile_bfbridge: starting in working directory " + cwd)
 
     try:
         bfbridge_cffi_prefix = Path('bfbridge_cffi_prefix.h').read_text()
@@ -57,6 +60,7 @@ def compile_bfbridge():
     # jni-md.h should also be included hence the platform paths, see link in https://stackoverflow.com/a/37029528
     # https://github.com/openjdk/jdk/blob/6e3cc131daa9f3b883164333bdaad7aa3a6ca018/src/jdk.hotspot.agent/share/classes/sun/jvm/hotspot/utilities/PlatformInfo.java#L32
     java_include = [java_include, os.path.join(java_include, "linux"), os.path.join(java_include, "darwin"), os.path.join(java_include, "win32"), os.path.join(java_include, "bsd")]
+    include_dirs = java_include + [cwd, c_dir]
 
     extra_link_args = []
 
@@ -70,7 +74,7 @@ def compile_bfbridge():
         extra_link_args.append("-ljvm")
         extra_link_args.append("-L" + java_link)
 
-    ffibuilder.set_source("_bfbridge", bfbridge_source, extra_link_args=extra_link_args, include_dirs=java_include + [c_dir], libraries=["jvm"])
+    ffibuilder.set_source("_bfbridge", bfbridge_source, extra_link_args=extra_link_args, include_dirs=include_dirs, libraries=["jvm"])
 
     ffibuilder.compile(verbose=True)
 
