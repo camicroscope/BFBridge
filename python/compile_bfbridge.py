@@ -10,9 +10,9 @@ def compile_bfbridge():
     c_dir = os.path.join('..', 'c', '')
 
     try:
+        bfbridge_cffi_prefix = Path('bfbridge_cffi_prefix.h').read_text()
         bfbridge_source = Path(c_dir + 'bfbridge_basiclib.c').read_text()
         bfbridge_header = Path(c_dir + 'bfbridge_basiclib.h').read_text()
-        bfbridge_cffi_prefix = Path('bfbridge_cffi_prefix.h').read_text()
     except BaseException as e:
         raise RuntimeError("bfbridge_basiclib.c and/or bfbridge_basiclib.h and/or bfbridge_cffi_prefix.h could not be found: " + str(e))
 
