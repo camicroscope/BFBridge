@@ -183,15 +183,12 @@ bfbridge_error_t *bfbridge_make_vm(bfbridge_vm_t *dest,
     // Should be freed: path_arg, cache_arg
     bfbridge_basiclib_string_t *cache_arg = allocate_string("-Dbfbridge.cachedir=");
 
-	__builtin_printf("xyz check cache\n");
     if (cachedir && cachedir[0] != '\0')
     {
-	__builtin_printf("xyz check cache yes %s\n", cachedir);
         // Remember that pointers we use must be valid until JNI_CreateJavaVM.
         append_to_string(cache_arg, cachedir);
         options[vm_args.nOptions++].optionString = cache_arg->str;
     }
-	__builtin_printf("xyz check cache continue\n");
 
     // Check if JVM already exists
     /*{
