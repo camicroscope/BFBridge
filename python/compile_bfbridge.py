@@ -13,8 +13,8 @@ def compile_bfbridge():
         bfbridge_source = Path(c_dir + 'bfbridge_basiclib.c').read_text()
         bfbridge_header = Path(c_dir + 'bfbridge_basiclib.h').read_text()
         bfbridge_cffi_prefix = Path('bfbridge_cffi_prefix.h').read_text()
-    except:
-        raise RuntimeError("bfbridge_basiclib.c and/or bfbridge_basiclib.h and/or bfbridge_cffi_prefix.h could not be found")
+    except BaseException as e:
+        raise RuntimeError("bfbridge_basiclib.c and/or bfbridge_basiclib.h and/or bfbridge_cffi_prefix.h could not be found: " + str(e))
 
     header_begin = "CFFI HEADER BEGIN"
     header_end = "CFFI HEADER END"
