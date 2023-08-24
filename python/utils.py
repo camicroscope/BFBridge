@@ -1,5 +1,53 @@
 from PIL import Image
 import numpy as np
+import os
+
+def IMPORT_BFBRIDGE():
+    global ffi
+    global lib
+
+    try:
+        # This will fail if compile_bfbridge.py was not run. Needs to compile with the same Python version.
+        # Or if os.getcwd does not contain the shared object
+        from ._bfbridge import ffi, lib
+    except ImportError as e:
+        print("Error: BFBridge (BioFormats wrapper) import failed:")
+        print(str(e))
+
+        print("Trying changing working directory")
+        try:
+            previous_cwd = os.getcwd()
+            os.chdir(Path(__file__).parent)
+            from ._bfbridge import ffi, lib
+            print("Successful")
+            os.chdir(previous_cwd)
+            return
+        except ImportError:
+            previous_cwd = None
+        except:
+            pass
+
+        print("Trying to compile. Working directory: " + os.getcwd())
+        from . import compile_bfbridge
+        try:
+            compile_bfbridge.compile_bfbridge()
+        except BaseException as e2:
+            print("BFBridge could not be compiled. Cannot proceed. Error:")
+            print(str(e2))
+            raise e
+        print("BFBridge compilation seems to be successful. Retrying import.")
+
+        try:
+            from ._bfbridge import ffi, lib
+            if previous_cwd:
+                os.chdir(previous_cwd)
+        except BaseException as e2:
+            print("Importing after BFBridge compilation failed. Cannot proceed")
+            print(str(e2))
+            if previous_cwd:
+                os.chdir(previous_cwd)
+            raise e
+        print("BFBridge loaded successfully after recompilation.")
 
 # channels = 3 or 4 supported currently
 # interleaved: Boolean
