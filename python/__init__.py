@@ -9,7 +9,6 @@ except ImportError as e:
     print("Error: BFBridge (BioFormats wrapper) import failed:")
     print(str(e))
     print("Trying to compile.")
-    print("Current file: " + __file__ + " (" + os.path.abspath(__file__) + ")")
     from . import compile_bfbridge
     try:
         compile_bfbridge.compile_bfbridge()
