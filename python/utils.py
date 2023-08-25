@@ -55,7 +55,7 @@ def IMPORT_BFBRIDGE():
 # pixel_type: Integer https://github.com/ome/bioformats/blob/9cb6cfa/components/formats-api/src/loci/formats/FormatTools.java#L98
 # interleaved: Boolean
 # little_endian: Boolean
-def make_image( \
+def make_pil_image( \
         byte_arr, width, height, channels, interleaved, bioformats_pixel_type, little_endian):
     if bioformats_pixel_type > 8 or bioformats_pixel_type < 0:
         raise ValueError("make_pil_image: pixel_type out of range")
