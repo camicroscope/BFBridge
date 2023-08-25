@@ -243,7 +243,7 @@ class BFBridgeInstance:
 
     def open_bytes_pil_image(self, plane, x, y, w, h):
         byte_arr = self.open_bytes(plane, x, y, w, h)
-        return utils.make_pil_image.make_image( \
+        return utils.make_pil_image( \
             byte_arr, w, h, self.get_rgb_channel_count(), \
             self.is_interleaved(), self.get_pixel_type(), \
             self.is_little_endian())
@@ -271,7 +271,7 @@ class BFBridgeInstance:
         if pixel_type == 0 or pixel_type == 2 or pixel_type == 4:
             pixel_type += 1
 
-        return utils.make_pil_image.make_image( \
+        return utils.make_pil_image( \
             byte_arr, w, h, self.get_rgb_channel_count(), \
             self.is_interleaved(), pixel_type, \
             self.is_little_endian())
