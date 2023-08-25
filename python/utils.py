@@ -50,7 +50,7 @@ def IMPORT_BFBRIDGE():
         print("BFBridge loaded successfully after recompilation.")
         return ffi, lib
 
-# channels = 3 or 4 supported currently
+# channels = 1 or 3 or 4 supported currently
 # interleaved: Boolean
 # pixel_type: Integer https://github.com/ome/bioformats/blob/9cb6cfa/components/formats-api/src/loci/formats/FormatTools.java#L98
 # interleaved: Boolean
