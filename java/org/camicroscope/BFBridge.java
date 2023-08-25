@@ -101,15 +101,8 @@ public class BFBridge {
     // javac -DBFBridge.cachedir=/tmp/cachedir for faster opening of files
     private static final File cachedir;
 
+    // Initialize cache
     static {
-        // Set log level, assuming that BFBridge is loaded before the logger
-        // "trace", "debug", "info", "warn", or "error"
-        String level = System.getenv("BFBRIDGE_LOGLEVEL");
-        if (level != null && !level.equals("")) {
-            System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", level);
-        }
-
-        // Initialize cache
         String cachepath = System.getProperty("BFBridge.cachedir");
         if (cachepath == null) {
             cachepath = System.getenv("BFBRIDGE_CACHEDIR");
