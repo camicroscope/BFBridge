@@ -48,7 +48,7 @@ def compile_bfbridge():
 
 
     # https://stackoverflow.com/q/31795394
-    # ffibuilder.cdef, unlike set_source, does not
+    # ffibuilder.cdef, unlike set_source, does not
     # call the compiler, but tries to parse it.
     # Hence we can't use the standard header.
 
@@ -75,12 +75,12 @@ def compile_bfbridge():
     extra_link_args = []
 
     if os.name != "nt":
-        extra_link_args.append("-Wl,-rpath," + java_link) # libjvm.so
+        extra_link_args.append("-Wl,-rpath," + java_link) # libjvm.so
         if sys.platform == "darwin":
             extra_link_args.append("-Wl,-install_name,@rpath/libjvm.dylib")
 
         # build fails without these when calling compiler manually
-        # but somehow fails silently in this script.
+        # but somehow fails silently in this script.
         extra_link_args.append("-ljvm")
         extra_link_args.append("-L" + java_link)
 

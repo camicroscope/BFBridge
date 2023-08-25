@@ -32,7 +32,7 @@ class BFBridgeVM:
             lib.bfbridge_free_vm(self.bfbridge_vm)
 
 # You may create this object as many
-# times as needed even in a single thread, and the thread will
+# times as needed even in a single thread, and the thread will
 # detach only after all of them are destroyed.
 # If you would like to keep the Java thread
 # alive, please do:

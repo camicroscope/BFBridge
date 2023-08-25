@@ -1,13 +1,13 @@
 # Two ways to handle JVM threads:
-# 1) Reference counting as with this file.
+# 1) Reference counting as with this file.
 # Eager thread-detaching approach.
 # Works best if most of the computational
 # work will be done outside the JVM.
 # Allows constructing multiple BFBridgeThread objects.
 # 2) Thread local method
 # Lazy thread-detaching approach
-# works best if the path taken would free the BFBridgeThread
-# object but need later again in the same thread
+# works best if the path taken would free the BFBridgeThread
+# object but need later again in the same thread
 # If neither scenario, then both approaches are fine.
 # Desired: 1) Reuse of BFThread object
 # 2) keeping alive if it will be reconstructed
