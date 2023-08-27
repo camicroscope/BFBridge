@@ -630,6 +630,7 @@ public class BFBridge {
             // https://github.com/ome/bioformats/issues/4058 means that
             // openBytes wasn't designed to copy to a preallocated byte array
             // unless it had the exact size and not greater
+            System.err.println("xywh" + x + " " + y + " " + w + " " + h);
             byte[] bytes = reader.openBytes(0, x, y, w, h);
             communicationBuffer.rewind().put(bytes);
             return bytes.length;
