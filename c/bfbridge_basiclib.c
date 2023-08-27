@@ -510,7 +510,12 @@ bfbridge_error_t *bfbridge_make_instance(
     );
     BFENVA(env, CallVoidMethod, bfbridge, thread->BFSetCommunicationBuffer, buffer);
     */
-    BFENVA(env, CallVoidMethod, bfbridge, thread->BFSetCommunicationBuffer, buffer);
+   
+    // Before: BFENVA(env, CallVoidMethod, bfbridge, thread->BFSetCommunicationBuffer, buffer);
+    // Faster:
+    BFENVA(env, CallNonvirtualVoidMethod, bfbridge, thread->bfbridge_base,
+        thread->BFSetCommunicationBuffer, buffer);
+
     BFENVA(env, DeleteLocalRef, buffer);
 
     // Ease of freeing: keep null until we can return without error
@@ -569,11 +574,17 @@ char *bfbridge_instance_get_communication_buffer(
 //      #define BFFUNC(caller, method, ...)
 //BFENVA(BFENV, caller, BFINSTC, thread->method, __VA_ARGS__)
 // Super easily:
+//#define BFFUNC(method, type, ...)
+//    BFENVA(BFENV, Call##type##Method, BFINSTC, thread->method, __VA_ARGS__)
+//#define BFFUNCV(method, type)
+ //   BFENVA(BFENV, Call##type##Method, BFINSTC, thread->method)
+
+// Super easily, super fast:
 #define BFFUNC(method, type, ...) \
-    BFENVA(BFENV, Call##type##Method, BFINSTC, thread->method, __VA_ARGS__)
+    BFENVA(BFENV, CallNonvirtual##type##Method, BFINSTC, thread->bfbridge_base, thread->method, __VA_ARGS__)
 // Use the second one, void one, for no args as __VA_ARGS__ requires at least one
 #define BFFUNCV(method, type) \
-    BFENVA(BFENV, Call##type##Method, BFINSTC, thread->method)
+    BFENVA(BFENV, CallNonvirtual##type##Method, BFINSTC, thread->bfbridge_base, thread->method)
 
 // Methods
 // Please keep in order with bfbridge_thread_t members
