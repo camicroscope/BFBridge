@@ -410,8 +410,12 @@ bytes to be read, which then the user of the library should read from the buffer
 #else // BFBRIDGE_BASICLIB_H
 // Display error if this header was included earlier but only now header-only mode
 // is requested
-#if defined(BFBRIDGE_INLINE) && !defined(BFBRIDGE_PROVIDED_SOURCE)
-#error "bfbridge_basiclib.h was already "#include"d in non-header-only mode"
-#endif // BFBRIDGE_PROVIDED_SOURCE
+// defined(BFBRIDGE_BASICLIB_H): header already included in this compile unit
+// defined(BFBRIDGE_INLINE): now we would like to inline
+// !defined(BFBRIDGE_PROVIDED_SOURCE): previous include didn't provide source
+// !defined(BFBRIDGE_HEADER): it isn't the case that this header is included from inside the .c
+#if defined(BFBRIDGE_BASICLIB_H) && defined(BFBRIDGE_INLINE) && !defined(BFBRIDGE_PROVIDED_SOURCE) && !defined(BFBRIDGE_HEADER)
+#error "bfbridge_basiclib.h was already "#include"d in non-header-only mode: Add to compile flags -DBFBRIDGE_INLINE ?"
+#endif
 
 #endif // BFBRIDGE_BASICLIB_H
