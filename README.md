@@ -92,4 +92,4 @@ On Unix SIGSEGV can mean many things. It can be any C segmentation fault (null p
 
 inside the method where the crash happens.
 
-Besides, uncommenting "-Xcheck:jni" will likely help.
+Besides, uncommenting "-Xcheck:jni" will make JVM add extra safety checks.
