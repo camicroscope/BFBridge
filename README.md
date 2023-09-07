@@ -2,6 +2,8 @@
 
 BioFormats wrapper in C using Java JNI, plus a Python wrapper using CFFI.
 
+[Link to documentation](https://github.com/camicroscope/BFBridge/wiki)
+
 ## C
 
 ```c
