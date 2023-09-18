@@ -1,5 +1,6 @@
 package org.camicroscope;
 
+import loci.common.DebugTools;
 import loci.formats.IFormatReader;
 // https://downloads.openmicroscopy.org/bio-formats/7.0.0/api/loci/formats/IFormatReader.html etc. for documentation
 import loci.formats.ImageReader;
@@ -101,38 +102,49 @@ public class BFBridge {
     // javac -DBFBridge.cachedir=/tmp/cachedir for faster opening of files
     private static final File cachedir;
 
-    // Initialize cache
     static {
+        // Set Logging level
+        // Available levels: DEBUG TRACE INFO WARN ERROR
+        String loglevel = System.getenv("BFBRIDGE_LOGLEVEL");
+        if (loglevel == null) {
+            loglevel = "INFO";
+        }
+        DebugTools.setRootLevel(loglevel.toUpperCase());
+
+        // Initialize cache
         String cachepath = System.getProperty("BFBridge.cachedir");
         if (cachepath == null) {
             cachepath = System.getenv("BFBRIDGE_CACHEDIR");
         }
-        System.out.println("Trying BFBridge cache directory: " + cachepath);
+        String cacheMessage = "Trying BFBridge cache directory: " + cachepath + "... ";
 
         File _cachedir = null;
         if (cachepath == null || cachepath.equals("")) {
-            System.out.println("Skipping BFBridge cache");
+            cacheMessage += "Skipping BFBridge cache";
         } else {
             _cachedir = new File(cachepath);
         }
         if (_cachedir != null && !_cachedir.exists()) {
-            System.out.println("BFBridge cache directory does not exist, skipping!");
+            cacheMessage += "BFBridge cache directory does not exist, skipping!";
             _cachedir = null;
         }
         if (_cachedir != null && !_cachedir.isDirectory()) {
-            System.out.println("BFBridge cache directory is not a directory, skipping!");
+            cacheMessage += "BFBridge cache directory is not a directory, skipping!";
             _cachedir = null;
         }
         if (_cachedir != null && !_cachedir.canRead()) {
-            System.out.println("cannot read from the BFBridge cache directory, skipping!");
+            cacheMessage += "cannot read from the BFBridge cache directory, skipping!";
             _cachedir = null;
         }
         if (_cachedir != null && !_cachedir.canWrite()) {
-            System.out.println("cannot write to the BFBridge cache directory, skipping!");
+            cacheMessage += "cannot write to the BFBridge cache directory, skipping!";
             _cachedir = null;
         }
         if (_cachedir != null) {
-            System.out.println("activating BFBridge cache");
+            cacheMessage += "activating BFBridge cache";
+        }
+        if (loglevel.equals("DEBUG")) {
+            System.out.println(cacheMessage);
         }
         cachedir = _cachedir;
     }
